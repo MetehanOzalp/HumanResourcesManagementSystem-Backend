@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import JavaProject.hrms.business.abstracts.AuthService;
 import JavaProject.hrms.core.utilities.results.Result;
+import JavaProject.hrms.entities.dtos.EmployerForRegisterDto;
 import JavaProject.hrms.entities.dtos.JobSeekerForRegisterDto;
 
 @RestController
@@ -25,6 +26,11 @@ public class AuthController {
 	@PostMapping("registerForJobSeeker")
 	public Result registerForJobSeeker(@RequestBody JobSeekerForRegisterDto jobSeekerForRegisterDto) {
 		return authService.registerForJobSeeker(jobSeekerForRegisterDto);
+	}
+
+	@PostMapping("registerForEmployer")
+	public Result registerForEmployer(@RequestBody EmployerForRegisterDto employerForRegisterDto) {
+		return authService.registerForEmployer(employerForRegisterDto);
 	}
 
 }
