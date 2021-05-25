@@ -7,6 +7,8 @@ import JavaProject.hrms.business.abstracts.AuthService;
 import JavaProject.hrms.business.abstracts.EmployerService;
 import JavaProject.hrms.business.abstracts.JobSeekerService;
 import JavaProject.hrms.business.abstracts.UserService;
+import JavaProject.hrms.core.adapters.mernis.MernisServiceAdapter;
+import JavaProject.hrms.core.adapters.mernis.UserCheckService;
 import JavaProject.hrms.core.utilities.business.BusinessRules;
 import JavaProject.hrms.core.utilities.results.ErrorResult;
 import JavaProject.hrms.core.utilities.results.Result;
@@ -22,17 +24,13 @@ public class AuthManager implements AuthService {
 	private UserService userService;
 	private JobSeekerService jobSeekerService;
 	private EmployerService employerService;
-	// private UserCheckService userCheckService;
 
 	@Autowired
-	public AuthManager(UserService userService,
-			JobSeekerService jobSeekerService/* , UserCheckService userCheckService */,
-			EmployerService employerService) {
+	public AuthManager(UserService userService, JobSeekerService jobSeekerService, EmployerService employerService) {
 		super();
 		this.userService = userService;
 		this.jobSeekerService = jobSeekerService;
 		this.employerService = employerService;
-		// this.userCheckService = userCheckService;
 	}
 
 	@Override
@@ -75,11 +73,12 @@ public class AuthManager implements AuthService {
 	}
 
 	public Result checkIfRealPerson(String nationalityId, String firstName, String lastName, int birthYear) {
-		/*
-		 * var result = userCheckService.validate(nationalityId, firstName, lastName,
-		 * birthYear); if (!result) { return new ErrorResult("Kimlik bilgileri yanlış");
-		 * }
-		 */
+		UserCheckService userCheckService = new MernisServiceAdapter();
+		var result = userCheckService.validate(nationalityId, firstName, lastName, birthYear);
+		if (!result) {
+			return new ErrorResult("Kimlik bilgileri yanlış");
+		}
+
 		return new SuccessResult();
 	}
 

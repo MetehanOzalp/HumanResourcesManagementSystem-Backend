@@ -1,4 +1,4 @@
-package JavaProject.hrms.core.adapters;
+package JavaProject.hrms.core.adapters.mernis;
 
 public interface UserCheckService {
 

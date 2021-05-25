@@ -1,4 +1,4 @@
-package JavaProject.hrms.core.adapters;
+package JavaProject.hrms.core.adapters.mernis;
 
 import java.util.Locale;
 
@@ -8,7 +8,6 @@ public class MernisServiceAdapter implements UserCheckService {
 
 	@Override
 	public boolean validate(String nationalityId, String firstName, String lastName, int birthYear) {
-
 		KPSPublicSoapProxy kpsPublicSoapProxy = new KPSPublicSoapProxy();
 		boolean result = false;
 		try {
