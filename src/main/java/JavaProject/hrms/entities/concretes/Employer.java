@@ -23,9 +23,7 @@ public class Employer extends User {
 	private String phoneNumber;
 
 	public Employer(int id, String email, String password, String companyName, String webSite, String phoneNumber) {
-		this.setId(0);
-		this.setEmail(email);
-		this.setPassword(password);
+		super(0, email, password);
 		this.companyName = companyName;
 		this.webSite = webSite;
 		this.phoneNumber = phoneNumber;
