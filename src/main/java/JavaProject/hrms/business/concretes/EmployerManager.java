@@ -41,6 +41,11 @@ public class EmployerManager implements EmployerService {
 		return new SuccessDataResult<List<Employer>>(employerDao.findAll(), "İşverenler listelendi");
 	}
 
+	@Override
+	public DataResult<Employer> getById(int id) {
+		return new SuccessDataResult<Employer>(employerDao.getById(id));
+	}
+
 	public Result checkIfInformation(Employer employer) {
 		if (employer.getEmail() == "" || employer.getCompanyName() == "" || employer.getPassword() == ""
 				|| employer.getPhoneNumber() == "" || employer.getWebSite() == "") {

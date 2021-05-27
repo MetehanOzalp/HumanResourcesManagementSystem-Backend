@@ -1,8 +1,12 @@
 package JavaProject.hrms.business.concretes;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import JavaProject.hrms.business.abstracts.ActivationCodeToEmployerService;
+import JavaProject.hrms.business.abstracts.ActivationCodeToJobSeekerService;
 import JavaProject.hrms.business.abstracts.AuthService;
 import JavaProject.hrms.business.abstracts.EmployerService;
 import JavaProject.hrms.business.abstracts.JobSeekerService;
@@ -10,9 +14,15 @@ import JavaProject.hrms.business.abstracts.UserService;
 import JavaProject.hrms.core.adapters.mernis.MernisServiceAdapter;
 import JavaProject.hrms.core.adapters.mernis.UserCheckService;
 import JavaProject.hrms.core.utilities.business.BusinessRules;
+import JavaProject.hrms.core.utilities.helpers.email.EmailService;
+import JavaProject.hrms.core.utilities.results.DataResult;
 import JavaProject.hrms.core.utilities.results.ErrorResult;
 import JavaProject.hrms.core.utilities.results.Result;
+import JavaProject.hrms.core.utilities.results.SuccessDataResult;
 import JavaProject.hrms.core.utilities.results.SuccessResult;
+import JavaProject.hrms.entities.concretes.ActivationCode;
+import JavaProject.hrms.entities.concretes.ActivationCodeToEmployer;
+import JavaProject.hrms.entities.concretes.ActivationCodeToJobSeeker;
 import JavaProject.hrms.entities.concretes.Employer;
 import JavaProject.hrms.entities.concretes.JobSeeker;
 import JavaProject.hrms.entities.dtos.EmployerForRegisterDto;
@@ -24,13 +34,21 @@ public class AuthManager implements AuthService {
 	private UserService userService;
 	private JobSeekerService jobSeekerService;
 	private EmployerService employerService;
+	private ActivationCodeToJobSeekerService activationCodeToJobSeekerService;
+	private ActivationCodeToEmployerService activationCodeToEmployerService;
+	private EmailService emailService;
 
 	@Autowired
-	public AuthManager(UserService userService, JobSeekerService jobSeekerService, EmployerService employerService) {
+	public AuthManager(UserService userService, JobSeekerService jobSeekerService, EmployerService employerService,
+			ActivationCodeToJobSeekerService activationCodeToJobSeekerService,
+			ActivationCodeToEmployerService activationCodeToEmployerService, EmailService emailService) {
 		super();
 		this.userService = userService;
 		this.jobSeekerService = jobSeekerService;
 		this.employerService = employerService;
+		this.activationCodeToJobSeekerService = activationCodeToJobSeekerService;
+		this.activationCodeToEmployerService = activationCodeToEmployerService;
+		this.emailService = emailService;
 	}
 
 	@Override
@@ -54,7 +72,14 @@ public class AuthManager implements AuthService {
 		if (!added.isSuccess()) {
 			return added;
 		}
-		return new SuccessResult("İş arayan eklendi");
+		var list = jobSeekerService.getAll().getData();
+		var lastId = list.get(list.size() - 1).getId();
+		var code = generateCode(lastId).getData();
+		activationCodeToJobSeekerService
+				.add(new ActivationCodeToJobSeeker(0, code.getActivationCode(), false, LocalDate.now(), lastId));
+		emailService.sendEmail(jobSeekerForRegisterDto.getEmail(), "Doğrulama Linki",
+				"http://localhost:8080/api/emailVerifications/jobSeekerActivation?code=" + code.getActivationCode());
+		return added;
 	}
 
 	@Override
@@ -69,7 +94,18 @@ public class AuthManager implements AuthService {
 		Employer employer = new Employer(0, employerForRegisterDto.getEmail(), employerForRegisterDto.getPassword(),
 				employerForRegisterDto.getCompanyName(), employerForRegisterDto.getWebSite(),
 				employerForRegisterDto.getPhoneNumber());
-		return employerService.add(employer);
+		var added = employerService.add(employer);
+		if (!added.isSuccess()) {
+			return added;
+		}
+		var list = employerService.getAll().getData();
+		var lastId = list.get(list.size() - 1).getId();
+		var code = generateCode(lastId).getData();
+		activationCodeToEmployerService
+				.add(new ActivationCodeToEmployer(0, code.getActivationCode(), false, LocalDate.now(), lastId));
+		emailService.sendEmail(employerForRegisterDto.getEmail(), "Doğrulama Linki",
+				"http://localhost:8080/api/emailVerifications/employerActivation?code=" + code.getActivationCode());
+		return added;
 	}
 
 	public Result checkIfRealPerson(String nationalityId, String firstName, String lastName, int birthYear) {
@@ -111,6 +147,11 @@ public class AuthManager implements AuthService {
 			return new ErrorResult("E-posta ve web site alan isimleri farklı");
 		}
 		return new SuccessResult();
+	}
+
+	public DataResult<ActivationCode> generateCode(int id) {
+		String activationCode = id + "-" + "dogrula";
+		return new SuccessDataResult<ActivationCode>(new ActivationCode(0, activationCode, false, LocalDate.now()));
 	}
 
 }
