@@ -33,7 +33,7 @@ public class ActivationCodeToJobSeekerManager implements ActivationCodeToJobSeek
 	@Override
 	public Result verify(String code) {
 		String[] parse = code.split("-");
-		var result = getByJobSeekerId(Integer.parseInt(parse[0]));
+		var result = getByJobSeekerId(Integer.parseInt(parse[1]));
 		if (!result.isSuccess()) {
 			return new ErrorResult(result.getMessage());
 		}

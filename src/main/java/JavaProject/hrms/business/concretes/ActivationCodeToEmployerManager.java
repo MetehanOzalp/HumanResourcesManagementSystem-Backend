@@ -35,7 +35,7 @@ public class ActivationCodeToEmployerManager implements ActivationCodeToEmployer
 	@Override
 	public Result verify(String code) {
 		String[] parse = code.split("-");
-		var result = getByEmployerId(Integer.parseInt(parse[0]));
+		var result = getByEmployerId(Integer.parseInt(parse[1]));
 		if (!result.isSuccess()) {
 			return new ErrorResult(result.getMessage());
 		}

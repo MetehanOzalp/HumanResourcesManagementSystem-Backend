@@ -1,6 +1,7 @@
 package JavaProject.hrms.business.concretes;
 
 import java.time.LocalDate;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -150,7 +151,10 @@ public class AuthManager implements AuthService {
 	}
 
 	public DataResult<ActivationCode> generateCode(int id) {
-		String activationCode = id + "-" + "dogrula";
+		Random random = new Random();
+		var number = random.nextInt(90) + 10;
+		var date = LocalDate.now();
+		String activationCode = number + "-" + id + "-" + date;
 		return new SuccessDataResult<ActivationCode>(new ActivationCode(0, activationCode, false, LocalDate.now()));
 	}
 
