@@ -1,14 +1,20 @@
 package JavaProject.hrms.entities.concretes;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "employers")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "jobPostings" })
 @PrimaryKeyJoinColumn(name = "user_id")
 @NoArgsConstructor
 public class Employer extends User {
@@ -21,6 +27,9 @@ public class Employer extends User {
 
 	@Column(name = "phone_number")
 	private String phoneNumber;
+
+	@OneToMany(mappedBy = "employer")
+	private List<JobPosting> jobPostings;
 
 	public Employer(int id, String email, String password, String companyName, String webSite, String phoneNumber) {
 		super(0, email, password);
