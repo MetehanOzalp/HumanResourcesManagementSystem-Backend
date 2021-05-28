@@ -77,7 +77,7 @@ public class AuthManager implements AuthService {
 		var code = generateCode(lastId).getData();
 		activationCodeToJobSeekerService
 				.add(new ActivationCodeToJobSeeker(0, code.getActivationCode(), false, LocalDate.now(), lastId));
-		emailService.sendEmail(jobSeekerForRegisterDto.getEmail(), "Doğrulama Linki",
+		sendEmail(jobSeekerForRegisterDto.getEmail(), "Doğrulama Linki",
 				"http://localhost:8080/api/emailVerifications/jobSeekerActivation?code=" + code.getActivationCode());
 		return added;
 	}
@@ -103,7 +103,7 @@ public class AuthManager implements AuthService {
 		var code = generateCode(lastId).getData();
 		activationCodeToEmployerService
 				.add(new ActivationCodeToEmployer(0, code.getActivationCode(), false, LocalDate.now(), lastId));
-		emailService.sendEmail(employerForRegisterDto.getEmail(), "Doğrulama Linki",
+		sendEmail(employerForRegisterDto.getEmail(), "Doğrulama Linki",
 				"http://localhost:8080/api/emailVerifications/employerActivation?code=" + code.getActivationCode());
 		return added;
 	}
@@ -152,6 +152,14 @@ public class AuthManager implements AuthService {
 	public DataResult<ActivationCode> generateCode(int id) {
 		String activationCode = id + "-" + "dogrula";
 		return new SuccessDataResult<ActivationCode>(new ActivationCode(0, activationCode, false, LocalDate.now()));
+	}
+
+	public Result sendEmail(String to, String title, String body) {
+		var result = emailService.sendEmail(to, title, body);
+		if (!result.isSuccess()) {
+			return result;
+		}
+		return result;
 	}
 
 }
