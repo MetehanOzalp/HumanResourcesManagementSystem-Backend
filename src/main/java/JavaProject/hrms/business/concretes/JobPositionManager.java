@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import JavaProject.hrms.business.abstracts.JobPositionService;
 import JavaProject.hrms.core.utilities.business.BusinessRules;
 import JavaProject.hrms.core.utilities.results.DataResult;
+import JavaProject.hrms.core.utilities.results.ErrorDataResult;
 import JavaProject.hrms.core.utilities.results.ErrorResult;
 import JavaProject.hrms.core.utilities.results.Result;
 import JavaProject.hrms.core.utilities.results.SuccessDataResult;
@@ -39,6 +40,15 @@ public class JobPositionManager implements JobPositionService {
 	@Override
 	public DataResult<List<JobPosition>> getAll() {
 		return new SuccessDataResult<List<JobPosition>>(jobPositionDao.findAll(), "İş pozisyonları listelendi");
+	}
+
+	@Override
+	public DataResult<JobPosition> getById(int id) {
+		var result = jobPositionDao.getById(id);
+		if (result == null) {
+			return new ErrorDataResult<JobPosition>("Böyle bir iş pozisyonu bulunamadı");
+		}
+		return new SuccessDataResult<JobPosition>(result);
 	}
 
 	public Result checkIfJobPositionExists(String jobPositionName) {

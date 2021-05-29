@@ -9,6 +9,8 @@ import JavaProject.hrms.entities.concretes.JobPosting;
 
 public interface JobPostingDao extends JpaRepository<JobPosting, Integer> {
 
+	JobPosting getById(int id);
+
 	List<JobPosting> getByIsActive(boolean isActive);
 
 	List<JobPosting> getByIsActive(boolean isActive, Sort sort);
