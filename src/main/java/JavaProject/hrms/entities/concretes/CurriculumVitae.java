@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -27,8 +29,9 @@ public class CurriculumVitae {
 	@Column(name = "id")
 	private int id;
 
-	@Column(name = "job_seeker_id")
-	private int jobSeekerId;
+	@ManyToOne
+	@JoinColumn(name = "job_seeker_id")
+	private JobSeeker jobSeeker;
 
 	@Column(name = "image_path")
 	private String imagePath;
