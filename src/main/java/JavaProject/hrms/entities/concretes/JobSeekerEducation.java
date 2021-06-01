@@ -1,6 +1,6 @@
 package JavaProject.hrms.entities.concretes;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +20,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name = "job_seeker_educations")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "curriculumVitae" })
 @AllArgsConstructor
 @NoArgsConstructor
 public class JobSeekerEducation {
@@ -41,9 +44,9 @@ public class JobSeekerEducation {
 	private String degree;
 
 	@Column(name = "start_date")
-	private LocalDate startDate;
+	private Date startDate;
 
 	@Column(name = "end_date")
-	private LocalDate endDate;
+	private Date endDate;
 
 }
