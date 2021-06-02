@@ -2,6 +2,7 @@ package JavaProject.hrms.api.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +24,7 @@ public class EmployerActivationByEmployeesController {
 	}
 
 	@PostMapping("add")
-	public Result add(EmployerActivationByEmployee employerActivationByEmployee) {
+	public Result add(@RequestBody EmployerActivationByEmployee employerActivationByEmployee) {
 		return employerActivationByEmployeeService.add(employerActivationByEmployee);
 	}
 
