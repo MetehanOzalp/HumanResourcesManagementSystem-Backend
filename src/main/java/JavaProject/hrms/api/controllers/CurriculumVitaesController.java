@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import JavaProject.hrms.business.abstracts.CurriculumVitaeService;
 import JavaProject.hrms.core.utilities.results.Result;
@@ -27,6 +28,11 @@ public class CurriculumVitaesController {
 	@PostMapping("add")
 	public Result add(@RequestBody CurriculumVitae curriculumVitae) {
 		return curriculumVitaeService.add(curriculumVitae);
+	}
+
+	@PostMapping("imageAdd")
+	public Result imageAdd(@RequestParam int curriculumVitaeId, @RequestParam MultipartFile file) {
+		return curriculumVitaeService.imageAdd(curriculumVitaeId, file);
 	}
 
 	@GetMapping("getAll")
