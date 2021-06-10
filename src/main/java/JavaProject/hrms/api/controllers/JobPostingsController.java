@@ -54,4 +54,9 @@ public class JobPostingsController {
 		return jobPostingService.getByEmployerJobPosting(employerId);
 	}
 
+	@GetMapping("getById")
+	public Result getById(@RequestParam int id) {
+		return jobPostingService.getByJobPostingId(id);
+	}
+
 }
