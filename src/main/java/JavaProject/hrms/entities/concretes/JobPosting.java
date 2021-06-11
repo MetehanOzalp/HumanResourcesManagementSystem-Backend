@@ -49,6 +49,14 @@ public class JobPosting {
 	private LocalDate releaseDate;
 
 	@ManyToOne()
+	@JoinColumn(name = "type_of_working_id")
+	private TypeOfWorking typeOfWorking;
+
+	@ManyToOne
+	@JoinColumn(name = "way_of_working_id")
+	private WayOfWorking wayOfWorking;
+
+	@ManyToOne()
 	@JoinColumn(name = "employer_id")
 	private Employer employer;
 

@@ -39,7 +39,7 @@ public class JobPostingManager implements JobPostingService {
 		if (result != null) {
 			return result;
 		}
-		jobPosting.setActive(true);
+		jobPosting.setActive(false);
 		jobPosting.setReleaseDate(LocalDate.now());
 		jobPostingDao.save(jobPosting);
 		return new SuccessResult("İş ilanı eklendi");
