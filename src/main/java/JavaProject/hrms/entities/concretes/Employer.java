@@ -32,7 +32,7 @@ public class Employer extends User {
 	private List<JobPosting> jobPostings;
 
 	public Employer(int id, String email, String password, String companyName, String webSite, String phoneNumber) {
-		super(0, email, password);
+		super(id, email, password);
 		this.companyName = companyName;
 		this.webSite = webSite;
 		this.phoneNumber = phoneNumber;

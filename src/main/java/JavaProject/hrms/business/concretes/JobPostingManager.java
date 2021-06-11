@@ -17,7 +17,13 @@ import JavaProject.hrms.core.utilities.results.Result;
 import JavaProject.hrms.core.utilities.results.SuccessDataResult;
 import JavaProject.hrms.core.utilities.results.SuccessResult;
 import JavaProject.hrms.dataAccess.abstracts.JobPostingDao;
+import JavaProject.hrms.entities.concretes.City;
+import JavaProject.hrms.entities.concretes.Employer;
+import JavaProject.hrms.entities.concretes.JobPosition;
 import JavaProject.hrms.entities.concretes.JobPosting;
+import JavaProject.hrms.entities.concretes.TypeOfWorking;
+import JavaProject.hrms.entities.concretes.WayOfWorking;
+import JavaProject.hrms.entities.dtos.JobPostingAddDto;
 
 @Service
 public class JobPostingManager implements JobPostingService {
@@ -33,7 +39,15 @@ public class JobPostingManager implements JobPostingService {
 	}
 
 	@Override
-	public Result add(JobPosting jobPosting) {
+	public Result add(JobPostingAddDto jobPostingAddDto) {
+		JobPosting jobPosting = new JobPosting(0, jobPostingAddDto.getJobDescription(), jobPostingAddDto.getMinSalary(),
+				jobPostingAddDto.getMaxSalary(), jobPostingAddDto.getOpenPositionCount(),
+				jobPostingAddDto.getApplicationDeadline(), false, null,
+				new TypeOfWorking(jobPostingAddDto.getTypeOfWorkingId(), null, null),
+				new WayOfWorking(jobPostingAddDto.getWayOfWorkingId(), null, null),
+				new Employer(jobPostingAddDto.getEmployerId(), null, null, null, null, null),
+				new JobPosition(jobPostingAddDto.getJobPositionId(), null, null),
+				new City(jobPostingAddDto.getCityId(), null, null));
 		var result = BusinessRules.run(checkIfEndDateValid(jobPosting),
 				checkIfJobPositionExists(jobPosting.getJobPosition().getId()));
 		if (result != null) {

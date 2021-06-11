@@ -15,6 +15,7 @@ import JavaProject.hrms.business.abstracts.JobPostingService;
 import JavaProject.hrms.core.utilities.results.DataResult;
 import JavaProject.hrms.core.utilities.results.Result;
 import JavaProject.hrms.entities.concretes.JobPosting;
+import JavaProject.hrms.entities.dtos.JobPostingAddDto;
 
 @RestController
 @RequestMapping("api/jobPosting/")
@@ -30,8 +31,8 @@ public class JobPostingsController {
 	}
 
 	@PostMapping("add")
-	public Result add(@RequestBody JobPosting jobPosting) {
-		return jobPostingService.add(jobPosting);
+	public Result add(@RequestBody JobPostingAddDto jobPostingAddDto) {
+		return jobPostingService.add(jobPostingAddDto);
 	}
 
 	@PostMapping("changeStatus")
