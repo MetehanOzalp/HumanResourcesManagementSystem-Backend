@@ -35,6 +35,11 @@ public class JobPostingsController {
 		return jobPostingService.add(jobPostingAddDto);
 	}
 
+	@PostMapping("delete")
+	public Result delete(@RequestParam int jobPostingId) {
+		return jobPostingService.delete(jobPostingId);
+	}
+
 	@PostMapping("changeStatus")
 	public Result changeStatus(@RequestParam int jobPostingId) {
 		return jobPostingService.changeJobPostingStatus(jobPostingId);

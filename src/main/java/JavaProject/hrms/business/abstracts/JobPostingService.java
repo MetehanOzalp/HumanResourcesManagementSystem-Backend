@@ -11,6 +11,8 @@ public interface JobPostingService {
 
 	Result add(JobPostingAddDto jobPostingAddDto);
 
+	Result delete(int jobPostingId);
+
 	Result changeJobPostingStatus(int jobPostingId);
 
 	DataResult<JobPosting> getByJobPostingId(int jobPostingId);

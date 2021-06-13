@@ -60,6 +60,12 @@ public class JobPostingManager implements JobPostingService {
 	}
 
 	@Override
+	public Result delete(int jobPostingId) {
+		jobPostingDao.deleteById(jobPostingId);
+		return null;
+	}
+
+	@Override
 	public Result changeJobPostingStatus(int jobPostingId) {
 		var jobPosting = getByJobPostingId(jobPostingId);
 		if (!jobPosting.isSuccess()) {
