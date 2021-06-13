@@ -80,8 +80,8 @@ public class JobPostingManager implements JobPostingService {
 	}
 
 	@Override
-	public DataResult<List<JobPosting>> getByActiveJobPostings() {
-		return new SuccessDataResult<List<JobPosting>>(jobPostingDao.getByIsActive(true));
+	public DataResult<List<JobPosting>> getByActiveOrPassiveJobPostings(boolean isActive) {
+		return new SuccessDataResult<List<JobPosting>>(jobPostingDao.getByIsActive(isActive));
 	}
 
 	@Override

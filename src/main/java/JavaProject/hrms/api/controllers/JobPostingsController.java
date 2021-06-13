@@ -42,7 +42,12 @@ public class JobPostingsController {
 
 	@GetMapping("getByActive")
 	public Result getByActive() {
-		return jobPostingService.getByActiveJobPostings();
+		return jobPostingService.getByActiveOrPassiveJobPostings(true);
+	}
+
+	@GetMapping("getByPassive")
+	public Result getByPassive() {
+		return jobPostingService.getByActiveOrPassiveJobPostings(false);
 	}
 
 	@GetMapping("getByReleaseDate")
