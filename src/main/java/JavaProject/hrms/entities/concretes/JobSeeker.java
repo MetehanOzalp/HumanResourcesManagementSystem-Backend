@@ -30,6 +30,9 @@ public class JobSeeker extends User {
 
 	@OneToMany(mappedBy = "jobSeeker")
 	private List<CurriculumVitae> curriculumVitaes;
+	
+	@OneToMany(mappedBy = "jobSeeker")
+	private List<Favorite> favorites;
 
 	public JobSeeker(int id, String email, String password, String firstName, String lastName, String nationalityId,
 			int birthYear) {

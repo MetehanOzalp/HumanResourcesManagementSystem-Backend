@@ -9,36 +9,34 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "job_seeker_foreign_languages")
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "curriculumVitae" })
+@Table(name = "favorites")
 @AllArgsConstructor
 @NoArgsConstructor
-public class JobSeekerForeignLanguage {
+public class Favorite {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
 
+	@Column(name = "user_id")
+	private int userId;
+
+	@Column(name = "job_posting_id")
+	private int jobPostingId;
+
 	@ManyToOne
-	@JoinColumn(name = "curriculum_vitaes_id", insertable = false, updatable = false)
-	private CurriculumVitae curriculumVitae;
+	@JoinColumn(name = "user_id", insertable = false, updatable = false)
+	private JobSeeker jobSeeker;
 
-	@Column(name = "curriculum_vitaes_id")
-	private int cvId;
-
-	@Column(name = "language_name")
-	private String languageName;
-
-	@Column(name = "language_level")
-	private int languageLevel;
+	@ManyToOne
+	@JoinColumn(name = "job_posting_id", insertable = false, updatable = false)
+	private JobPosting jobPosting;
 
 }

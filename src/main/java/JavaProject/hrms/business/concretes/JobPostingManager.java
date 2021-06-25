@@ -47,7 +47,7 @@ public class JobPostingManager implements JobPostingService {
 				new WayOfWorking(jobPostingAddDto.getWayOfWorkingId(), null, null),
 				new Employer(jobPostingAddDto.getEmployerId(), null, null, null, null, null),
 				new JobPosition(jobPostingAddDto.getJobPositionId(), null, null),
-				new City(jobPostingAddDto.getCityId(), null, null));
+				new City(jobPostingAddDto.getCityId(), null, null), null);
 		var result = BusinessRules.run(checkIfEndDateValid(jobPosting),
 				checkIfJobPositionExists(jobPosting.getJobPosition().getId()));
 		if (result != null) {

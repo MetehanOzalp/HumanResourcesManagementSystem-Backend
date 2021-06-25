@@ -29,8 +29,11 @@ public class JobSeekerSkill {
 	private int id;
 
 	@ManyToOne
-	@JoinColumn(name = "curriculum_vitaes_id")
+	@JoinColumn(name = "curriculum_vitaes_id", insertable = false, updatable = false)
 	private CurriculumVitae curriculumVitae;
+
+	@Column(name = "curriculum_vitaes_id")
+	private int cvId;
 
 	@Column(name = "skill_name")
 	private String skillName;

@@ -1,5 +1,6 @@
 package JavaProject.hrms.api.controllers;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,7 @@ import JavaProject.hrms.entities.concretes.JobSeekerSkill;
 
 @RestController
 @RequestMapping("/api/jobSeekerSkills/")
+@CrossOrigin
 public class JobSeekerSkillsController {
 
 	private JobSeekerSkillService jobSeekerSkillService;

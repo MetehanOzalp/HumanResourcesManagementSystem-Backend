@@ -31,8 +31,11 @@ public class JobSeekerEducation {
 	private int id;
 
 	@ManyToOne
-	@JoinColumn(name = "curriculum_vitaes_id")
+	@JoinColumn(name = "curriculum_vitaes_id", insertable = false, updatable = false)
 	private CurriculumVitae curriculumVitae;
+
+	@Column(name = "curriculum_vitaes_id")
+	private int cvId;
 
 	@Column(name = "school_name")
 	private String schoolName;
