@@ -37,6 +37,12 @@ public class EmployerManager implements EmployerService {
 	}
 
 	@Override
+	public Result update(Employer employer) {
+		employerDao.save(employer);
+		return new SuccessResult("İşveren güncellendi");
+	}
+
+	@Override
 	public DataResult<List<Employer>> getAll() {
 		return new SuccessDataResult<List<Employer>>(employerDao.findAll(), "İşverenler listelendi");
 	}

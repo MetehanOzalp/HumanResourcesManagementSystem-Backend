@@ -33,6 +33,11 @@ public class EmployeesController {
 		return employeeService.add(employee);
 	}
 
+	@PostMapping("update")
+	public Result update(@RequestBody Employee employee) {
+		return employeeService.update(employee);
+	}
+
 	@GetMapping("getall")
 	public DataResult<List<Employee>> getAll() {
 		return employeeService.getAll();

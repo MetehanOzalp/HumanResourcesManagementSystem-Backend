@@ -9,6 +9,8 @@ import JavaProject.hrms.entities.concretes.Employer;
 public interface EmployerService {
 
 	Result add(Employer employer);
+	
+	Result update(Employer employer);
 
 	DataResult<List<Employer>> getAll();
 

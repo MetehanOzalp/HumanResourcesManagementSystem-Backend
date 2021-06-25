@@ -8,7 +8,9 @@ import JavaProject.hrms.entities.concretes.Employee;
 
 public interface EmployeeService {
 
-	Result add(Employee systemPersonnel);
+	Result add(Employee employee);
+
+	Result update(Employee employee);
 
 	DataResult<List<Employee>> getAll();
 

@@ -25,9 +25,15 @@ public class EmployeeManager implements EmployeeService {
 	}
 
 	@Override
-	public Result add(Employee systemPersonnel) {
-		employeeDao.save(systemPersonnel);
+	public Result add(Employee employee) {
+		employeeDao.save(employee);
 		return new SuccessResult("Sistem personeli eklendi");
+	}
+
+	@Override
+	public Result update(Employee employee) {
+		employeeDao.save(employee);
+		return new SuccessResult("Sistem personeli bilgisi güncellendi");
 	}
 
 	@Override
