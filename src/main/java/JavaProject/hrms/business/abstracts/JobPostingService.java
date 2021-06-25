@@ -17,6 +17,8 @@ public interface JobPostingService {
 
 	DataResult<JobPosting> getByJobPostingId(int jobPostingId);
 
+	DataResult<List<JobPosting>> getByIsActiveAndPageNumber(boolean isActice, int pageNumber);
+
 	DataResult<List<JobPosting>> getByActiveOrPassiveJobPostings(boolean isActive);
 
 	DataResult<List<JobPosting>> getByReleaseDateJobPosting(int value);

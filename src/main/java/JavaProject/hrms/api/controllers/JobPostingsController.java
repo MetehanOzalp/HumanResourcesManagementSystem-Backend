@@ -50,6 +50,11 @@ public class JobPostingsController {
 		return jobPostingService.getByActiveOrPassiveJobPostings(true);
 	}
 
+	@GetMapping("getByActiveAndPageable")
+	public Result getByActiveAndPageable(@RequestParam int pageNumber) {
+		return jobPostingService.getByIsActiveAndPageNumber(true, pageNumber);
+	}
+
 	@GetMapping("getByPassive")
 	public Result getByPassive() {
 		return jobPostingService.getByActiveOrPassiveJobPostings(false);

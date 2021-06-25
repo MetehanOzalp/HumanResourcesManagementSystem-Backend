@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -83,6 +85,12 @@ public class JobPostingManager implements JobPostingService {
 			return new ErrorDataResult<JobPosting>("Böyle bir iş ilanı bulunamadı");
 		}
 		return new SuccessDataResult<JobPosting>(result);
+	}
+
+	@Override
+	public DataResult<List<JobPosting>> getByIsActiveAndPageNumber(boolean isActice, int pageNumber) {
+		Pageable pageable = PageRequest.of(pageNumber - 1, 10);
+		return new SuccessDataResult<List<JobPosting>>(jobPostingDao.getByIsActive(isActice, pageable));
 	}
 
 	@Override
