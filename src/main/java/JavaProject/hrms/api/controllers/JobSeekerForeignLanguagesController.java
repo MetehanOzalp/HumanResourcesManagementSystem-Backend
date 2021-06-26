@@ -3,6 +3,7 @@ package JavaProject.hrms.api.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +28,11 @@ public class JobSeekerForeignLanguagesController {
 	@PostMapping("add")
 	public Result add(@RequestBody JobSeekerForeignLanguage jobSeekerForeignLanguage) {
 		return jobSeekerForeignLanguageService.add(jobSeekerForeignLanguage);
+	}
+
+	@PutMapping("update")
+	public Result update(@RequestBody JobSeekerForeignLanguage jobSeekerForeignLanguage) {
+		return jobSeekerForeignLanguageService.update(jobSeekerForeignLanguage);
 	}
 
 }

@@ -9,6 +9,8 @@ import JavaProject.hrms.entities.concretes.JobSeekerEducation;
 public interface JobSeekerEducationService {
 
 	Result add(JobSeekerEducation jobSeekerEducation);
+	
+	Result update(JobSeekerEducation jobSeekerEducation);
 
 	DataResult<List<JobSeekerEducation>> getByDateOfGraduationSorted(int jobSeekerId);
 

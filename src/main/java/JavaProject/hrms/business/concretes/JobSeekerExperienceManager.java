@@ -32,6 +32,12 @@ public class JobSeekerExperienceManager implements JobSeekerExperienceService {
 	}
 
 	@Override
+	public Result update(JobSeekerExperience jobSeekerExperience) {
+		jobSeekerExperienceDao.save(jobSeekerExperience);
+		return new SuccessResult("Deneyim bilgisi güncellendi!");
+	}
+
+	@Override
 	public DataResult<List<JobSeekerExperience>> getByDateOfFinishSorted(int jobSeekerId) {
 		Sort sort = Sort.by(Sort.Direction.DESC, "endDate");
 		return new SuccessDataResult<List<JobSeekerExperience>>(

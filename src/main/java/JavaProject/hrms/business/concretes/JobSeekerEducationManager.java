@@ -32,6 +32,12 @@ public class JobSeekerEducationManager implements JobSeekerEducationService {
 	}
 
 	@Override
+	public Result update(JobSeekerEducation jobSeekerEducation) {
+		jobSeekerEducationDao.save(jobSeekerEducation);
+		return new SuccessResult("Eğitim bilgisi güncellendi");
+	}
+
+	@Override
 	public DataResult<List<JobSeekerEducation>> getByDateOfGraduationSorted(int jobSeekerId) {
 		Sort sort = Sort.by(Sort.Direction.DESC, "endDate");
 		return new SuccessDataResult<List<JobSeekerEducation>>(

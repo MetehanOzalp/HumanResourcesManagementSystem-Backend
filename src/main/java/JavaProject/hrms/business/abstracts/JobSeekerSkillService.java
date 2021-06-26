@@ -6,5 +6,7 @@ import JavaProject.hrms.entities.concretes.JobSeekerSkill;
 public interface JobSeekerSkillService {
 
 	Result add(JobSeekerSkill jobSeekerSkill);
+	
+	Result update(JobSeekerSkill jobSeekerSkill); 
 
 }

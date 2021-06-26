@@ -2,6 +2,7 @@ package JavaProject.hrms.api.controllers;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +26,11 @@ public class JobSeekerSkillsController {
 	@PostMapping("add")
 	public Result add(@RequestBody JobSeekerSkill jobSeekerSkill) {
 		return jobSeekerSkillService.add(jobSeekerSkill);
+	}
+
+	@PutMapping("update")
+	public Result update(@RequestBody JobSeekerSkill jobSeekerSkill) {
+		return jobSeekerSkillService.update(jobSeekerSkill);
 	}
 
 }

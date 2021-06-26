@@ -24,4 +24,10 @@ public class JobSeekerSkillManager implements JobSeekerSkillService {
 		return new SuccessResult("Yetenek eklendi");
 	}
 
+	@Override
+	public Result update(JobSeekerSkill jobSeekerSkill) {
+		jobSeekerSkillDao.save(jobSeekerSkill);
+		return new SuccessResult("Yetenek bilgisi güncellendi");
+	}
+
 }

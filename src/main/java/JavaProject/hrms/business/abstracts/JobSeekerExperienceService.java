@@ -10,6 +10,8 @@ public interface JobSeekerExperienceService {
 
 	Result add(JobSeekerExperience jobSeekerExperience);
 
+	Result update(JobSeekerExperience jobSeekerExperience);
+
 	DataResult<List<JobSeekerExperience>> getByDateOfFinishSorted(int jobSeekerId);
 
 }
