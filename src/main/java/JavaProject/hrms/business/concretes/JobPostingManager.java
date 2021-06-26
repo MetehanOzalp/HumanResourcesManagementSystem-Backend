@@ -26,6 +26,7 @@ import JavaProject.hrms.entities.concretes.JobPosting;
 import JavaProject.hrms.entities.concretes.TypeOfWorking;
 import JavaProject.hrms.entities.concretes.WayOfWorking;
 import JavaProject.hrms.entities.dtos.JobPostingAddDto;
+import JavaProject.hrms.entities.dtos.JobPostingFilter;
 
 @Service
 public class JobPostingManager implements JobPostingService {
@@ -91,6 +92,14 @@ public class JobPostingManager implements JobPostingService {
 	public DataResult<List<JobPosting>> getByIsActiveAndPageNumber(boolean isActice, int pageNumber) {
 		Pageable pageable = PageRequest.of(pageNumber - 1, 10);
 		return new SuccessDataResult<List<JobPosting>>(jobPostingDao.getByIsActive(isActice, pageable));
+	}
+
+	@Override
+	public DataResult<List<JobPosting>> getByIsActiveAndPageNumberAndFilter(boolean isActice, int pageNumber,
+			JobPostingFilter jobPostingFilter) {
+		Pageable pageable = PageRequest.of(pageNumber - 1, 10);
+		return new SuccessDataResult<List<JobPosting>>(
+				jobPostingDao.getByFilter(jobPostingFilter, pageable));
 	}
 
 	@Override
