@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import JavaProject.hrms.business.abstracts.JobPostingService;
@@ -56,8 +57,9 @@ public class JobPostingsController {
 		return jobPostingService.getByIsActiveAndPageNumber(true, pageNumber);
 	}
 
-	@GetMapping("getByActiveAndFilter")
-	public Result getByActiveAndFilter(@RequestParam int pageNumber, JobPostingFilter jobPostingFilter) {
+	@PostMapping("getByActiveAndFilter")
+	@ResponseBody
+	public Result getByActiveAndFilter(@RequestParam int pageNumber, @RequestBody JobPostingFilter jobPostingFilter) {
 		return jobPostingService.getByIsActiveAndPageNumberAndFilter(true, pageNumber, jobPostingFilter);
 	}
 
