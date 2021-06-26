@@ -3,6 +3,7 @@ package JavaProject.hrms.api.controllers;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -36,6 +37,11 @@ public class JobSeekerExperiencesController {
 	@PutMapping("update")
 	public Result update(@RequestBody JobSeekerExperience jobSeekerExperience) {
 		return jobSeekerExperienceService.update(jobSeekerExperience);
+	}
+
+	@DeleteMapping("delete")
+	public Result delete(@RequestParam int id) {
+		return jobSeekerExperienceService.delete(id);
 	}
 
 	@GetMapping("getByDateOfFinishSorted")

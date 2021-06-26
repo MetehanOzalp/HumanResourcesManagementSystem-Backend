@@ -6,7 +6,9 @@ import JavaProject.hrms.entities.concretes.JobSeekerForeignLanguage;
 public interface JobSeekerForeignLanguageService {
 
 	Result add(JobSeekerForeignLanguage jobSeekerForeignLanguage);
-	
+
 	Result update(JobSeekerForeignLanguage jobSeekerForeignLanguage);
+
+	Result delete(int id);
 
 }

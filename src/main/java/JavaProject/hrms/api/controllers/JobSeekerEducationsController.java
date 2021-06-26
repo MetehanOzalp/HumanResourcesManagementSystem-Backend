@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -18,7 +19,7 @@ import JavaProject.hrms.core.utilities.results.Result;
 import JavaProject.hrms.entities.concretes.JobSeekerEducation;
 
 @RestController
-@RequestMapping("/api/jobSeeerEducations/")
+@RequestMapping("/api/jobSeekerEducations/")
 @CrossOrigin
 public class JobSeekerEducationsController {
 
@@ -38,6 +39,11 @@ public class JobSeekerEducationsController {
 	@PutMapping("update")
 	public Result update(@RequestBody JobSeekerEducation jobSeekerEducation) {
 		return jobSeekerEducationService.update(jobSeekerEducation);
+	}
+
+	@DeleteMapping("delete")
+	public Result delete(@RequestParam int id) {
+		return jobSeekerEducationService.delete(id);
 	}
 
 	@GetMapping("getByDateOfGraduationSorted")

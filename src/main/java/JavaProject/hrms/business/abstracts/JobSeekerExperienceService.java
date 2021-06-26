@@ -12,6 +12,8 @@ public interface JobSeekerExperienceService {
 
 	Result update(JobSeekerExperience jobSeekerExperience);
 
+	Result delete(int id);
+
 	DataResult<List<JobSeekerExperience>> getByDateOfFinishSorted(int jobSeekerId);
 
 }

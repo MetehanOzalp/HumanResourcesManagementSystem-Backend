@@ -38,6 +38,12 @@ public class JobSeekerEducationManager implements JobSeekerEducationService {
 	}
 
 	@Override
+	public Result delete(int id) {
+		jobSeekerEducationDao.deleteById(id);
+		return new SuccessResult("Eğitim bilgisi silindi");
+	}
+
+	@Override
 	public DataResult<List<JobSeekerEducation>> getByDateOfGraduationSorted(int jobSeekerId) {
 		Sort sort = Sort.by(Sort.Direction.DESC, "endDate");
 		return new SuccessDataResult<List<JobSeekerEducation>>(

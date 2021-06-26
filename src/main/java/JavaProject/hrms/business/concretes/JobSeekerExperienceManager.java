@@ -38,6 +38,12 @@ public class JobSeekerExperienceManager implements JobSeekerExperienceService {
 	}
 
 	@Override
+	public Result delete(int id) {
+		jobSeekerExperienceDao.deleteById(id);
+		return new SuccessResult("Deneyim bilgisi silindi");
+	}
+
+	@Override
 	public DataResult<List<JobSeekerExperience>> getByDateOfFinishSorted(int jobSeekerId) {
 		Sort sort = Sort.by(Sort.Direction.DESC, "endDate");
 		return new SuccessDataResult<List<JobSeekerExperience>>(

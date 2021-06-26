@@ -29,7 +29,13 @@ public class JobSeekerForeignLanguageManager implements JobSeekerForeignLanguage
 	@Override
 	public Result update(JobSeekerForeignLanguage jobSeekerForeignLanguage) {
 		jobSeekerForeignLanguageDao.save(jobSeekerForeignLanguage);
-		return new SuccessResult("Yabancı dil bilgisi güncellendi!");
+		return new SuccessResult("Yabancı dil bilgisi güncellendi");
+	}
+
+	@Override
+	public Result delete(int id) {
+		jobSeekerForeignLanguageDao.deleteById(id);
+		return new SuccessResult("Yabancı dil bilgisi silindi");
 	}
 
 }

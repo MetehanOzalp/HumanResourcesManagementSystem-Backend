@@ -30,4 +30,10 @@ public class JobSeekerSkillManager implements JobSeekerSkillService {
 		return new SuccessResult("Yetenek bilgisi güncellendi");
 	}
 
+	@Override
+	public Result delete(int id) {
+		jobSeekerSkillDao.deleteById(id);
+		return new SuccessResult("Yetenek bilgisi silindi");
+	}
+
 }
