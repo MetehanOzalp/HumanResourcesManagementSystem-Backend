@@ -10,6 +10,8 @@ public interface FavoriteService {
 
 	Result add(Favorite favorite);
 
+	Result delete(int id);
+
 	DataResult<List<Favorite>> getByJobSeekerId(int id);
 
 }

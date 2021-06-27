@@ -29,6 +29,12 @@ public class FavoriteManager implements FavoriteService {
 	}
 
 	@Override
+	public Result delete(int id) {
+		favoriteDao.deleteById(id);
+		return new SuccessResult("Favorilerden silindi");
+	}
+
+	@Override
 	public DataResult<List<Favorite>> getByJobSeekerId(int id) {
 		return new SuccessDataResult<List<Favorite>>(favoriteDao.getByJobSeeker_Id(id));
 	}
