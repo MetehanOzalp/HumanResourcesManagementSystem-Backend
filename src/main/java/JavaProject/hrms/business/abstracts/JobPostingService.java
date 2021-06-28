@@ -10,7 +10,7 @@ import JavaProject.hrms.entities.dtos.JobPostingFilter;
 
 public interface JobPostingService {
 
-	Result add(JobPostingAddDto jobPostingAddDto);
+	Result add(JobPosting jobPosting);
 
 	Result delete(int jobPostingId);
 
@@ -20,7 +20,8 @@ public interface JobPostingService {
 
 	DataResult<List<JobPosting>> getByIsActiveAndPageNumber(boolean isActice, int pageNumber);
 
-	DataResult<List<JobPosting>> getByIsActiveAndPageNumberAndFilter(boolean isActice, int pageNumber, JobPostingFilter jobPostingFilter);
+	DataResult<List<JobPosting>> getByIsActiveAndPageNumberAndFilter(boolean isActice, int pageNumber,
+			JobPostingFilter jobPostingFilter);
 
 	DataResult<List<JobPosting>> getByActiveOrPassiveJobPostings(boolean isActive);
 

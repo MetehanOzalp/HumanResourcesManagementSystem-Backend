@@ -42,17 +42,20 @@ public class JobPostingManager implements JobPostingService {
 	}
 
 	@Override
-	public Result add(JobPostingAddDto jobPostingAddDto) {
-		JobPosting jobPosting = new JobPosting(0, jobPostingAddDto.getJobDescription(), jobPostingAddDto.getMinSalary(),
-				jobPostingAddDto.getMaxSalary(), jobPostingAddDto.getOpenPositionCount(),
-				jobPostingAddDto.getApplicationDeadline(), false, null,
-				new TypeOfWorking(jobPostingAddDto.getTypeOfWorkingId(), null, null),
-				new WayOfWorking(jobPostingAddDto.getWayOfWorkingId(), null, null),
-				new Employer(jobPostingAddDto.getEmployerId(), null, null, null, null, null),
-				new JobPosition(jobPostingAddDto.getJobPositionId(), null, null),
-				new City(jobPostingAddDto.getCityId(), null, null), null);
+	public Result add(JobPosting jobPosting) {
+		/*
+		 * JobPosting jobPosting = new JobPosting(0,
+		 * jobPostingAddDto.getJobDescription(), jobPostingAddDto.getMinSalary(),
+		 * jobPostingAddDto.getMaxSalary(), jobPostingAddDto.getOpenPositionCount(),
+		 * jobPostingAddDto.getApplicationDeadline(), false, null, new
+		 * TypeOfWorking(jobPostingAddDto.getTypeOfWorkingId(), null, null), new
+		 * WayOfWorking(jobPostingAddDto.getWayOfWorkingId(), null, null), new
+		 * Employer(jobPostingAddDto.getEmployerId(), null, null, null, null, null), new
+		 * JobPosition(jobPostingAddDto.getJobPositionId(), null, null), new
+		 * City(jobPostingAddDto.getCityId(), null, null), null);
+		 */
 		var result = BusinessRules.run(checkIfEndDateValid(jobPosting),
-				checkIfJobPositionExists(jobPosting.getJobPosition().getId()));
+				checkIfJobPositionExists(jobPosting.getJobPositionId()));
 		if (result != null) {
 			return result;
 		}
@@ -95,11 +98,10 @@ public class JobPostingManager implements JobPostingService {
 	}
 
 	@Override
-	public DataResult<List<JobPosting>> getByIsActiveAndPageNumberAndFilter(boolean isActice, int pageNumber,
+	public DataResult<List<JobPosting>> getByIsActiveAndPageNumberAndFilter(boolean isActive, int pageNumber,
 			JobPostingFilter jobPostingFilter) {
 		Pageable pageable = PageRequest.of(pageNumber - 1, 10);
-		return new SuccessDataResult<List<JobPosting>>(
-				jobPostingDao.getByFilter(jobPostingFilter, pageable));
+		return new SuccessDataResult<List<JobPosting>>(jobPostingDao.getByFilter(isActive, jobPostingFilter, pageable));
 	}
 
 	@Override

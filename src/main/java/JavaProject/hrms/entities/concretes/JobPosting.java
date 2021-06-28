@@ -50,27 +50,42 @@ public class JobPosting {
 	@Column(name = "release_date")
 	private LocalDate releaseDate;
 
+	@Column(name = "type_of_working_id")
+	private int typeOfWorkingId;
+
+	@Column(name = "way_of_working_id")
+	private int wayOfWorkingId;
+
+	@Column(name = "employer_id")
+	private int employerId;
+
+	@Column(name = "job_position_id")
+	private int jobPositionId;
+
+	@Column(name = "city_id")
+	private int cityId;
+
 	@ManyToOne()
-	@JoinColumn(name = "type_of_working_id")
+	@JoinColumn(name = "type_of_working_id", insertable = false, updatable = false)
 	private TypeOfWorking typeOfWorking;
 
 	@ManyToOne
-	@JoinColumn(name = "way_of_working_id")
+	@JoinColumn(name = "way_of_working_id", insertable = false, updatable = false)
 	private WayOfWorking wayOfWorking;
 
 	@ManyToOne()
-	@JoinColumn(name = "employer_id")
+	@JoinColumn(name = "employer_id", insertable = false, updatable = false)
 	private Employer employer;
 
 	@ManyToOne()
-	@JoinColumn(name = "job_position_id")
+	@JoinColumn(name = "job_position_id", insertable = false, updatable = false)
 	private JobPosition jobPosition;
 
 	@ManyToOne
-	@JoinColumn(name = "city_id")
+	@JoinColumn(name = "city_id", insertable = false, updatable = false)
 	private City city;
-	
+
 	@OneToMany(mappedBy = "jobSeeker")
 	private List<Favorite> favorites;
-
+	
 }

@@ -33,8 +33,8 @@ public class JobPostingsController {
 	}
 
 	@PostMapping("add")
-	public Result add(@RequestBody JobPostingAddDto jobPostingAddDto) {
-		return jobPostingService.add(jobPostingAddDto);
+	public Result add(@RequestBody JobPosting jobPosting) {
+		return jobPostingService.add(jobPosting);
 	}
 
 	@PostMapping("delete")

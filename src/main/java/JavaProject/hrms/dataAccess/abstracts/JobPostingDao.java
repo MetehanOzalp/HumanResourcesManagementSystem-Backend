@@ -24,8 +24,10 @@ public interface JobPostingDao extends JpaRepository<JobPosting, Integer> {
 	@Query("Select j from JavaProject.hrms.entities.concretes.JobPosting j where ((:#{#filter.cityId}) IS NULL OR j.city.id IN (:#{#filter.cityId}))"
 			+ " and ((:#{#filter.jobPositionId}) IS NULL OR j.jobPosition.id IN (:#{#filter.jobPositionId}))"
 			+ " and ((:#{#filter.wayOfWorkingId}) IS NULL OR j.wayOfWorking.id IN (:#{#filter.wayOfWorkingId}))"
-			+ " and ((:#{#filter.typeOfWorkingId}) IS NULL OR j.typeOfWorking.id IN (:#{#filter.typeOfWorkingId}))")
-	List<JobPosting> getByFilter(@Param("filter") JobPostingFilter jobPostingFilter, Pageable pageable);
+			+ " and ((:#{#filter.typeOfWorkingId}) IS NULL OR j.typeOfWorking.id IN (:#{#filter.typeOfWorkingId}))"
+			+ " and ((:#{#isActive}) IS NULL OR j.isActive = (:#{#isActive}))")
+	List<JobPosting> getByFilter(@Param("isActive") boolean isActive,
+			@Param("filter") JobPostingFilter jobPostingFilter, Pageable pageable);
 
 	List<JobPosting> getByIsActiveAndEmployer_id(boolean isActive, int id);
 
