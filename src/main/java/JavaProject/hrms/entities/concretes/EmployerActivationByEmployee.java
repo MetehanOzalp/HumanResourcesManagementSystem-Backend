@@ -4,9 +4,12 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.NoArgsConstructor;
@@ -32,6 +35,10 @@ public class EmployerActivationByEmployee {
 
 	@Column(name = "verified_date", columnDefinition = "Date default CURRENT_DATE")
 	private LocalDate verifiedDate;
+
+	@OneToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "employer_id", nullable = false, insertable = false, updatable = false)
+	private Employer employer;
 
 	public EmployerActivationByEmployee(int id, int employerId, int employeeId, boolean isVerified,
 			LocalDate verifiedDate) {

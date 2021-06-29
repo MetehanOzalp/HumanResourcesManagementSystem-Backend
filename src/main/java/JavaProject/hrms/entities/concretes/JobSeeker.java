@@ -2,9 +2,12 @@ package JavaProject.hrms.entities.concretes;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -30,9 +33,12 @@ public class JobSeeker extends User {
 
 	@OneToMany(mappedBy = "jobSeeker")
 	private List<CurriculumVitae> curriculumVitaes;
-	
+
 	@OneToMany(mappedBy = "jobSeeker")
 	private List<Favorite> favorites;
+
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "jobSeeker")
+	private ActivationCodeToJobSeeker activationCodeToJobSeeker;
 
 	public JobSeeker(int id, String email, String password, String firstName, String lastName, String nationalityId,
 			int birthYear) {
@@ -73,6 +79,14 @@ public class JobSeeker extends User {
 
 	public void setBirthYear(int birthYear) {
 		this.birthYear = birthYear;
+	}
+
+	public ActivationCodeToJobSeeker getActivationCodeToJobSeeker() {
+		return activationCodeToJobSeeker;
+	}
+
+	public void setActivationCodeToJobSeeker(ActivationCodeToJobSeeker activationCodeToJobSeeker) {
+		this.activationCodeToJobSeeker = activationCodeToJobSeeker;
 	}
 
 }

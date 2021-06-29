@@ -2,20 +2,29 @@ package JavaProject.hrms.entities.concretes;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+@Data
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "employers")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "jobPostings" })
 @PrimaryKeyJoinColumn(name = "user_id")
+@AllArgsConstructor
 @NoArgsConstructor
 public class Employer extends User {
 
@@ -30,6 +39,12 @@ public class Employer extends User {
 
 	@OneToMany(mappedBy = "employer")
 	private List<JobPosting> jobPostings;
+
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employer")
+	private EmployerActivationByEmployee employerActivationByEmployee;
+
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employer")
+	private ActivationCodeToEmployer activationCodeToEmployer;
 
 	public Employer(int id, String email, String password, String companyName, String webSite, String phoneNumber) {
 		super(id, email, password);

@@ -4,6 +4,9 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -17,6 +20,10 @@ public class ActivationCodeToEmployer extends ActivationCode {
 
 	@Column(name = "employer_id")
 	private int employerId;
+
+	@OneToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "employer_id", insertable = false, updatable = false)
+	private Employer employer;
 
 	public ActivationCodeToEmployer(int id, String activationCode, boolean isVerified, LocalDate verifiedDate,
 			int employerId) {
