@@ -52,6 +52,19 @@ public class CurriculumVitaeManager implements CurriculumVitaeService {
 	}
 
 	@Override
+	public Result imageUpdate(int id, MultipartFile file) {
+		var result = getById(id);
+		if (!result.isSuccess()) {
+			return new ErrorResult(result.getMessage());
+		}
+		ImageService imageService = new CloudinaryManager();
+		Map<String, String> upload = (Map<String, String>) imageService.uploadImage(file).getData();
+		result.getData().setImagePath(upload.get("url"));
+		curriculumVitaeDao.save(result.getData());
+		return new SuccessResult("Resim yüklendi");
+	}
+
+	@Override
 	public DataResult<List<CurriculumVitae>> getAll() {
 		return new SuccessDataResult<List<CurriculumVitae>>(curriculumVitaeDao.findAll(), "CV'ler listelendi");
 	}

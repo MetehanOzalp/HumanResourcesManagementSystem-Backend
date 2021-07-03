@@ -14,6 +14,8 @@ public interface CurriculumVitaeService {
 
 	Result imageAdd(int id, MultipartFile file);
 
+	Result imageUpdate(int id, MultipartFile file);
+
 	DataResult<List<CurriculumVitae>> getAll();
 
 	DataResult<List<CurriculumVitae>> getByJobSeekerId(int id);
