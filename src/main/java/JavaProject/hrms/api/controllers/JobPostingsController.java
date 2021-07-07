@@ -16,7 +16,6 @@ import JavaProject.hrms.business.abstracts.JobPostingService;
 import JavaProject.hrms.core.utilities.results.DataResult;
 import JavaProject.hrms.core.utilities.results.Result;
 import JavaProject.hrms.entities.concretes.JobPosting;
-import JavaProject.hrms.entities.dtos.JobPostingAddDto;
 import JavaProject.hrms.entities.dtos.JobPostingFilter;
 
 @RestController
@@ -54,13 +53,13 @@ public class JobPostingsController {
 
 	@GetMapping("getByActiveAndPageable")
 	public Result getByActiveAndPageable(@RequestParam int pageNumber) {
-		return jobPostingService.getByIsActiveAndPageNumber(true, pageNumber);
+		return jobPostingService.getByIsConfirmAndPageNumber(true, pageNumber);
 	}
 
 	@PostMapping("getByActiveAndFilter")
 	@ResponseBody
 	public Result getByActiveAndFilter(@RequestParam int pageNumber, @RequestBody JobPostingFilter jobPostingFilter) {
-		return jobPostingService.getByIsActiveAndPageNumberAndFilter(true, pageNumber, jobPostingFilter);
+		return jobPostingService.getByIsConfirmAndPageNumberAndFilter(true, pageNumber, jobPostingFilter);
 	}
 
 	@GetMapping("getByPassive")

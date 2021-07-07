@@ -19,13 +19,7 @@ import JavaProject.hrms.core.utilities.results.Result;
 import JavaProject.hrms.core.utilities.results.SuccessDataResult;
 import JavaProject.hrms.core.utilities.results.SuccessResult;
 import JavaProject.hrms.dataAccess.abstracts.JobPostingDao;
-import JavaProject.hrms.entities.concretes.City;
-import JavaProject.hrms.entities.concretes.Employer;
-import JavaProject.hrms.entities.concretes.JobPosition;
 import JavaProject.hrms.entities.concretes.JobPosting;
-import JavaProject.hrms.entities.concretes.TypeOfWorking;
-import JavaProject.hrms.entities.concretes.WayOfWorking;
-import JavaProject.hrms.entities.dtos.JobPostingAddDto;
 import JavaProject.hrms.entities.dtos.JobPostingFilter;
 
 @Service
@@ -59,7 +53,8 @@ public class JobPostingManager implements JobPostingService {
 		if (result != null) {
 			return result;
 		}
-		jobPosting.setActive(false);
+		jobPosting.setConfirm(false);
+		jobPosting.setActive(true);
 		jobPosting.setReleaseDate(LocalDate.now());
 		jobPostingDao.save(jobPosting);
 		return new SuccessResult("İş ilanı eklendi");
@@ -68,7 +63,7 @@ public class JobPostingManager implements JobPostingService {
 	@Override
 	public Result delete(int jobPostingId) {
 		jobPostingDao.deleteById(jobPostingId);
-		return null;
+		return new SuccessResult("İş ilanı silindi");
 	}
 
 	@Override
@@ -77,7 +72,7 @@ public class JobPostingManager implements JobPostingService {
 		if (!jobPosting.isSuccess()) {
 			return new ErrorResult(jobPosting.getMessage());
 		}
-		jobPosting.getData().setActive(!jobPosting.getData().isActive());
+		jobPosting.getData().setConfirm(!jobPosting.getData().isConfirm());
 		jobPostingDao.save(jobPosting.getData());
 		return new SuccessResult("İlan durumu değiştirildi");
 	}
@@ -92,21 +87,25 @@ public class JobPostingManager implements JobPostingService {
 	}
 
 	@Override
-	public DataResult<List<JobPosting>> getByIsActiveAndPageNumber(boolean isActice, int pageNumber) {
+	public DataResult<List<JobPosting>> getByIsConfirmAndPageNumber(boolean isActice, int pageNumber) {
 		Pageable pageable = PageRequest.of(pageNumber - 1, 10);
-		return new SuccessDataResult<List<JobPosting>>(jobPostingDao.getByIsActive(isActice, pageable));
+		return new SuccessDataResult<List<JobPosting>>(jobPostingDao.getByIsConfirm(isActice, pageable));
 	}
 
 	@Override
-	public DataResult<List<JobPosting>> getByIsActiveAndPageNumberAndFilter(boolean isActive, int pageNumber,
+	public DataResult<List<JobPosting>> getByIsConfirmAndPageNumberAndFilter(boolean isActive, int pageNumber,
 			JobPostingFilter jobPostingFilter) {
 		Pageable pageable = PageRequest.of(pageNumber - 1, 10);
+		var result = BusinessRules.run(deadlineCheck());
+		if (result != null) {
+			return new ErrorDataResult<List<JobPosting>>(result.getMessage());
+		}
 		return new SuccessDataResult<List<JobPosting>>(jobPostingDao.getByFilter(isActive, jobPostingFilter, pageable));
 	}
 
 	@Override
 	public DataResult<List<JobPosting>> getByActiveOrPassiveJobPostings(boolean isActive) {
-		return new SuccessDataResult<List<JobPosting>>(jobPostingDao.getByIsActive(isActive));
+		return new SuccessDataResult<List<JobPosting>>(jobPostingDao.getByIsConfirm(isActive));
 	}
 
 	@Override
@@ -117,7 +116,7 @@ public class JobPostingManager implements JobPostingService {
 		} else {
 			sort = Sort.by(Sort.Direction.ASC, "releaseDate");
 		}
-		return new SuccessDataResult<List<JobPosting>>(jobPostingDao.getByIsActive(true, sort));
+		return new SuccessDataResult<List<JobPosting>>(jobPostingDao.getByIsConfirm(true, sort));
 	}
 
 	@Override
@@ -136,6 +135,17 @@ public class JobPostingManager implements JobPostingService {
 		var result = jobPositionService.getById(jobPositionId);
 		if (!result.isSuccess()) {
 			return new ErrorResult(result.getMessage());
+		}
+		return new SuccessResult();
+	}
+
+	public Result deadlineCheck() {
+		var result = jobPostingDao.findAll();
+		for (JobPosting jobPosting : result) {
+			if (jobPosting.getApplicationDeadline().isBefore(LocalDate.now())) {
+				jobPosting.setActive(false);
+				jobPostingDao.save(jobPosting);
+			}
 		}
 		return new SuccessResult();
 	}

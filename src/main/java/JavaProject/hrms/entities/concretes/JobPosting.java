@@ -47,6 +47,9 @@ public class JobPosting {
 	@Column(name = "is_active")
 	private boolean isActive;
 
+	@Column(name = "is_confirm")
+	private boolean isConfirm;
+
 	@Column(name = "release_date")
 	private LocalDate releaseDate;
 
@@ -87,5 +90,5 @@ public class JobPosting {
 
 	@OneToMany(mappedBy = "jobSeeker")
 	private List<Favorite> favorites;
-	
+
 }
