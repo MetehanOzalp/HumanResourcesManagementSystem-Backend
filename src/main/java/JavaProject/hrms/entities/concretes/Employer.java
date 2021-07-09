@@ -77,4 +77,12 @@ public class Employer extends User {
 		this.phoneNumber = phoneNumber;
 	}
 
+	public ActivationCodeToEmployer getActivationCodeToEmployer() {
+		return activationCodeToEmployer;
+	}
+
+	public void setActivationCodeToEmployer(ActivationCodeToEmployer activationCodeToEmployer) {
+		this.activationCodeToEmployer = activationCodeToEmployer;
+	}
+
 }

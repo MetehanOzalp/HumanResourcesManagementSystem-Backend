@@ -3,6 +3,8 @@ package JavaProject.hrms.api.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,54 +34,95 @@ public class JobPostingsController {
 	}
 
 	@PostMapping("add")
-	public Result add(@RequestBody JobPosting jobPosting) {
-		return jobPostingService.add(jobPosting);
+	public ResponseEntity<?> add(@RequestBody JobPosting jobPosting) {
+		var result = jobPostingService.add(jobPosting);
+		if (!result.isSuccess()) {
+			return new ResponseEntity<Object>(result, HttpStatus.BAD_REQUEST);
+		}
+		return ResponseEntity.ok(result);
 	}
 
 	@PostMapping("delete")
-	public Result delete(@RequestParam int jobPostingId) {
-		return jobPostingService.delete(jobPostingId);
+	public ResponseEntity<?> delete(@RequestParam int jobPostingId) {
+		var result = jobPostingService.delete(jobPostingId);
+		if (!result.isSuccess()) {
+			return new ResponseEntity<Object>(result, HttpStatus.BAD_REQUEST);
+		}
+		return ResponseEntity.ok(result);
 	}
 
 	@PostMapping("changeStatus")
-	public Result changeStatus(@RequestParam int jobPostingId) {
-		return jobPostingService.changeJobPostingStatus(jobPostingId);
+	public ResponseEntity<?> changeStatus(@RequestParam int jobPostingId) {
+		var result = jobPostingService.changeJobPostingStatus(jobPostingId);
+		if (!result.isSuccess()) {
+			return new ResponseEntity<Object>(result, HttpStatus.BAD_REQUEST);
+		}
+		return ResponseEntity.ok(result);
 	}
 
 	@GetMapping("getByActive")
-	public Result getByActive() {
-		return jobPostingService.getByActiveOrPassiveJobPostings(true);
+	public ResponseEntity<?> getByActive() {
+		var result = jobPostingService.getByActiveOrPassiveJobPostings(true);
+		if (!result.isSuccess()) {
+			return new ResponseEntity<Object>(result, HttpStatus.BAD_REQUEST);
+		}
+		return ResponseEntity.ok(result);
 	}
 
 	@GetMapping("getByActiveAndPageable")
-	public Result getByActiveAndPageable(@RequestParam int pageNumber) {
-		return jobPostingService.getByIsConfirmAndPageNumber(true, pageNumber);
+	public ResponseEntity<?> getByActiveAndPageable(@RequestParam int pageNumber) {
+		var result = jobPostingService.getByIsConfirmAndPageNumber(true, pageNumber);
+		if (!result.isSuccess()) {
+			return new ResponseEntity<Object>(result, HttpStatus.BAD_REQUEST);
+		}
+		return ResponseEntity.ok(result);
 	}
 
 	@PostMapping("getByActiveAndFilter")
 	@ResponseBody
-	public Result getByActiveAndFilter(@RequestParam int pageNumber, @RequestBody JobPostingFilter jobPostingFilter) {
-		return jobPostingService.getByIsConfirmAndPageNumberAndFilter(true, pageNumber, jobPostingFilter);
+	public ResponseEntity<?> getByActiveAndFilter(@RequestParam int pageNumber,
+			@RequestBody JobPostingFilter jobPostingFilter) {
+		var result = jobPostingService.getByIsConfirmAndPageNumberAndFilter(true, pageNumber, jobPostingFilter);
+		if (!result.isSuccess()) {
+			return new ResponseEntity<Object>(result, HttpStatus.BAD_REQUEST);
+		}
+		return ResponseEntity.ok(result);
 	}
 
 	@GetMapping("getByPassive")
-	public Result getByPassive() {
-		return jobPostingService.getByActiveOrPassiveJobPostings(false);
+	public ResponseEntity<?> getByPassive() {
+		var result = jobPostingService.getByActiveOrPassiveJobPostings(false);
+		if (!result.isSuccess()) {
+			return new ResponseEntity<Object>(result, HttpStatus.BAD_REQUEST);
+		}
+		return ResponseEntity.ok(result);
 	}
 
 	@GetMapping("getByReleaseDate")
-	public DataResult<List<JobPosting>> getByReleaseDate(@RequestParam int value) {
-		return jobPostingService.getByReleaseDateJobPosting(value);
+	public ResponseEntity<?> getByReleaseDate(@RequestParam int value) {
+		var result = jobPostingService.getByReleaseDateJobPosting(value);
+		if (!result.isSuccess()) {
+			return new ResponseEntity<Object>(result, HttpStatus.BAD_REQUEST);
+		}
+		return ResponseEntity.ok(result);
 	}
 
 	@GetMapping("getByEmployer")
-	public DataResult<List<JobPosting>> getByEmployer(@RequestParam int employerId) {
-		return jobPostingService.getByEmployerJobPosting(employerId);
+	public ResponseEntity<?> getByEmployer(@RequestParam int employerId) {
+		var result = jobPostingService.getByEmployerJobPosting(employerId);
+		if (!result.isSuccess()) {
+			return new ResponseEntity<Object>(result, HttpStatus.BAD_REQUEST);
+		}
+		return ResponseEntity.ok(result);
 	}
 
 	@GetMapping("getById")
-	public Result getById(@RequestParam int id) {
-		return jobPostingService.getByJobPostingId(id);
+	public ResponseEntity<?> getById(@RequestParam int id) {
+		var result = jobPostingService.getByJobPostingId(id);
+		if (!result.isSuccess()) {
+			return new ResponseEntity<Object>(result, HttpStatus.BAD_REQUEST);
+		}
+		return ResponseEntity.ok(result);
 	}
 
 }

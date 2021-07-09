@@ -102,6 +102,7 @@ public class AuthManager implements AuthService {
 		var list = employerService.getAll().getData();
 		var lastId = list.get(list.size() - 1).getId();
 		var code = generateCode(lastId).getData();
+		System.out.print(lastId);
 		activationCodeToEmployerService
 				.add(new ActivationCodeToEmployer(0, code.getActivationCode(), false, LocalDate.now(), lastId));
 		sendEmail(employerForRegisterDto.getEmail(), "Doğrulama Linki",
