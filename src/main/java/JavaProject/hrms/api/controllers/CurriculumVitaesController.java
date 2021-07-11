@@ -1,6 +1,8 @@
 package JavaProject.hrms.api.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import JavaProject.hrms.business.abstracts.CurriculumVitaeService;
-import JavaProject.hrms.core.utilities.results.Result;
 import JavaProject.hrms.entities.concretes.CurriculumVitae;
 
 @RestController
@@ -29,28 +30,48 @@ public class CurriculumVitaesController {
 	}
 
 	@PostMapping("add")
-	public Result add(@RequestBody CurriculumVitae curriculumVitae) {
-		return curriculumVitaeService.add(curriculumVitae);
+	public ResponseEntity<?> add(@RequestBody CurriculumVitae curriculumVitae) {
+		var result = curriculumVitaeService.add(curriculumVitae);
+		if (!result.isSuccess()) {
+			return new ResponseEntity<Object>(result, HttpStatus.BAD_REQUEST);
+		}
+		return ResponseEntity.ok(result);
 	}
 
 	@PostMapping("imageAdd")
-	public Result imageAdd(@RequestParam int curriculumVitaeId, @RequestParam MultipartFile file) {
-		return curriculumVitaeService.imageAdd(curriculumVitaeId, file);
+	public ResponseEntity<?> imageAdd(@RequestParam int curriculumVitaeId, @RequestParam MultipartFile file) {
+		var result = curriculumVitaeService.imageAdd(curriculumVitaeId, file);
+		if (!result.isSuccess()) {
+			return new ResponseEntity<Object>(result, HttpStatus.BAD_REQUEST);
+		}
+		return ResponseEntity.ok(result);
 	}
 
 	@PutMapping("imageUpdate")
-	public Result imageUpdate(@RequestBody MultipartFile file) {
-		return curriculumVitaeService.imageUpdate(1, file);
+	public ResponseEntity<?> imageUpdate(@RequestParam int curriculumVitaeId, @RequestBody MultipartFile file) {
+		var result = curriculumVitaeService.imageUpdate(curriculumVitaeId, file);
+		if (!result.isSuccess()) {
+			return new ResponseEntity<Object>(result, HttpStatus.BAD_REQUEST);
+		}
+		return ResponseEntity.ok(result);
 	}
 
 	@GetMapping("getAll")
-	public Result getAll() {
-		return curriculumVitaeService.getAll();
+	public ResponseEntity<?> getAll() {
+		var result = curriculumVitaeService.getAll();
+		if (!result.isSuccess()) {
+			return new ResponseEntity<Object>(result, HttpStatus.BAD_REQUEST);
+		}
+		return ResponseEntity.ok(result);
 	}
 
 	@GetMapping("getByJobSeekerId")
-	public Result getByJobSeekerId(@RequestParam int getByJobSeekerId) {
-		return curriculumVitaeService.getByJobSeekerId(getByJobSeekerId);
+	public ResponseEntity<?> getByJobSeekerId(@RequestParam int getByJobSeekerId) {
+		var result = curriculumVitaeService.getByJobSeekerId(getByJobSeekerId);
+		if (!result.isSuccess()) {
+			return new ResponseEntity<Object>(result, HttpStatus.BAD_REQUEST);
+		}
+		return ResponseEntity.ok(result);
 	}
 
 }

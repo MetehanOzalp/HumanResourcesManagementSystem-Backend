@@ -1,7 +1,5 @@
 package JavaProject.hrms.api.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import JavaProject.hrms.business.abstracts.JobPostingService;
-import JavaProject.hrms.core.utilities.results.DataResult;
-import JavaProject.hrms.core.utilities.results.Result;
 import JavaProject.hrms.entities.concretes.JobPosting;
 import JavaProject.hrms.entities.dtos.JobPostingFilter;
 

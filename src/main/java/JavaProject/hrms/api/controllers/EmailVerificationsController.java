@@ -1,6 +1,8 @@
 package JavaProject.hrms.api.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -8,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import JavaProject.hrms.business.abstracts.ActivationCodeToEmployerService;
 import JavaProject.hrms.business.abstracts.ActivationCodeToJobSeekerService;
-import JavaProject.hrms.core.utilities.results.Result;
 
 @RestController
 @RequestMapping("/api/emailVerifications/")
@@ -26,13 +27,21 @@ public class EmailVerificationsController {
 	}
 
 	@GetMapping("employerActivation")
-	public Result employerActivation(@RequestParam String code) {
-		return activationCodeToEmployerService.verify(code);
+	public ResponseEntity<?> employerActivation(@RequestParam String code) {
+		var result = activationCodeToEmployerService.verify(code);
+		if (!result.isSuccess()) {
+			return new ResponseEntity<Object>(result, HttpStatus.BAD_REQUEST);
+		}
+		return ResponseEntity.ok(result);
 	}
 
 	@GetMapping("jobSeekerActivation")
-	public Result jobSeekerActivation(@RequestParam String code) {
-		return activationCodeToJobSeekerService.verify(code);
+	public ResponseEntity<?> jobSeekerActivation(@RequestParam String code) {
+		var result = activationCodeToJobSeekerService.verify(code);
+		if (!result.isSuccess()) {
+			return new ResponseEntity<Object>(result, HttpStatus.BAD_REQUEST);
+		}
+		return ResponseEntity.ok(result);
 	}
 
 }
