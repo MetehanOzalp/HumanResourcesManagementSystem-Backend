@@ -15,5 +15,7 @@ public class JobPostingFilter {
 	private List<Integer> jobPositionId;
 	private List<Integer> wayOfWorkingId;
 	private List<Integer> typeOfWorkingId;
+	private int minSalary;
+	private int maxSalary;
 
 }

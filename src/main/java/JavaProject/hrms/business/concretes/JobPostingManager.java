@@ -96,7 +96,7 @@ public class JobPostingManager implements JobPostingService {
 	public DataResult<List<JobPosting>> getByIsConfirmAndPageNumberAndFilter(boolean isActive, int pageNumber,
 			JobPostingFilter jobPostingFilter) {
 		Pageable pageable = PageRequest.of(pageNumber - 1, 10);
-		var result = BusinessRules.run(deadlineCheck());
+		var result = BusinessRules.run(deadlineCheck(), maxSalaryFilterCheck(jobPostingFilter));
 		if (result != null) {
 			return new ErrorDataResult<List<JobPosting>>(result.getMessage());
 		}
@@ -146,6 +146,13 @@ public class JobPostingManager implements JobPostingService {
 				jobPosting.setActive(false);
 				jobPostingDao.save(jobPosting);
 			}
+		}
+		return new SuccessResult();
+	}
+
+	public Result maxSalaryFilterCheck(JobPostingFilter jobPostingFilter) {
+		if (jobPostingFilter.getMaxSalary() == 0) {
+			jobPostingFilter.setMaxSalary(1000000);
 		}
 		return new SuccessResult();
 	}
