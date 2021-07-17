@@ -27,7 +27,7 @@ public interface JobPostingDao extends JpaRepository<JobPosting, Integer> {
 			+ " and ((:#{#filter.typeOfWorkingId}) IS NULL OR j.typeOfWorking.id IN (:#{#filter.typeOfWorkingId}))"
 			+ " and ((:#{#isConfirm}) IS NULL OR j.isConfirm = (:#{#isConfirm})) and j.isActive = true"
 			+ " and ((:#{#filter.minSalary}) IS NULL OR j.minSalary >= (:#{#filter.minSalary}))"
-			+ " and ((:#{#filter.maxSalary}) IS NULL OR j.maxSalary <= (:#{#filter.maxSalary}))")
+			+ " and (j.maxSalary <= (:#{#filter.maxSalary}) OR (:#{#filter.maxSalary}) = 0)")
 	List<JobPosting> getByFilter(@Param("isConfirm") boolean isConfirm,
 			@Param("filter") JobPostingFilter jobPostingFilter, Pageable pageable);
 
